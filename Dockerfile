@@ -43,7 +43,6 @@ RUN apk add --no-cache \
     poppler-dev \
     librsvg-dev \
     openexr-dev \
-    openslide-dev \
     cfitsio-dev \
     giflib-dev \
     imagemagick-dev \
@@ -68,7 +67,6 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/v
       -Dpoppler=enabled \
       -Drsvg=enabled \
       -Dopenexr=enabled \
-      -Dopenslide=enabled \
       -Dcfitsio=enabled \
       -Dgif=enabled \
       -Dmagick=enabled \
