@@ -13,7 +13,6 @@ RUN apk add --no-cache \
     wget \
     nasm \
     bash \
-    heif-dev \
     libjpeg-turbo-dev \
     libpng-dev \
     libwebp-dev \
