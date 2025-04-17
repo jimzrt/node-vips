@@ -32,7 +32,22 @@ RUN apk add --no-cache \
     ninja \
     g++ \
     make \
-    meson
+    meson \
+    # Additional format support
+    fftw-dev \
+    orc-dev \
+    lcms2-dev \
+    pango-dev \
+    fontconfig-dev \
+    openjpeg-dev \
+    poppler-dev \
+    librsvg-dev \
+    openexr-dev \
+    openslide-dev \
+    cfitsio-dev \
+    giflib-dev \
+    imagemagick-dev \
+    libarchive-dev
 
 # Build latest libvips from source with libheif support
 ENV VIPS_VERSION=8.16.1
@@ -44,14 +59,30 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/v
       --buildtype=release \
       -Dgtk_doc=false \
       -Dheif=enabled \
+      -Dfftw=enabled \
+      -Dorc=enabled \
+      -Dlcms=enabled \
+      -Dpango=enabled \
+      -Dfontconfig=enabled \
+      -Dopenjpeg=enabled \
+      -Dpoppler=enabled \
+      -Drsvg=enabled \
+      -Dopenexr=enabled \
+      -Dopenslide=enabled \
+      -Dcfitsio=enabled \
+      -Dgif=enabled \
+      -Dmagick=enabled \
+      -Dlibarchive=enabled \
       -Dexamples=false && \
     meson compile -C build && \
     meson install -C build && \
     cd .. && \
     rm -rf vips-${VIPS_VERSION}*
 
-# Link libraries
-RUN echo "/usr/lib" >> /etc/ld.so.conf && ldconfig
+# Link libraries (Alpine uses /etc/ld-musl-*.path files instead of ld.so.conf)
+RUN mkdir -p /etc/ld-musl-$(uname -m).path.d && \
+    echo "/usr/lib" > /etc/ld-musl-$(uname -m).path.d/libvips.conf && \
+    echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libvips.conf
 
 # Working directory
 WORKDIR /app
