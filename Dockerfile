@@ -61,16 +61,13 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/v
       -Dfftw=enabled \
       -Dorc=enabled \
       -Dlcms=enabled \
-      -Dpango=enabled \
       -Dfontconfig=enabled \
       -Dopenjpeg=enabled \
       -Dpoppler=enabled \
       -Drsvg=enabled \
       -Dopenexr=enabled \
       -Dcfitsio=enabled \
-      -Dgif=enabled \
       -Dmagick=enabled \
-      -Dlibarchive=enabled \
       -Dexamples=false && \
     meson compile -C build && \
     meson install -C build && \
