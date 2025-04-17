@@ -20,7 +20,7 @@ This image includes:
 You can use this image as a base for your own Node.js projects that rely on `sharp`:
 
 ```Dockerfile
-FROM jimzrt/node-vips:latest
+FROM jamestop/node-vips:latest
 
 WORKDIR /app
 COPY . .
