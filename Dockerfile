@@ -31,17 +31,22 @@ RUN apk add --no-cache \
     cmake \
     ninja \
     g++ \
-    make
+    make \
+    meson
 
 # Build latest libvips from source with libheif support
 ENV VIPS_VERSION=8.16.1
 
-RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.gz && \
-    tar xf vips-${VIPS_VERSION}.tar.gz && \
+RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz && \
+    tar xf vips-${VIPS_VERSION}.tar.xz && \
     cd vips-${VIPS_VERSION} && \
-    ./configure --prefix=/usr && \
-    make -j$(nproc) && \
-    make install && \
+    meson setup build \
+      --buildtype=release \
+      -Dgtk_doc=false \
+      -Dheif=enabled \
+      -Dexamples=false && \
+    meson compile -C build && \
+    meson install -C build && \
     cd .. && \
     rm -rf vips-${VIPS_VERSION}*
 
