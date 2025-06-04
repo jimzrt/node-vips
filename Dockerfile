@@ -1,7 +1,6 @@
 # Dockerfile for node-sharp-base
 
 FROM node:22-alpine
-
 # Install required build tools and libraries
 RUN apk add --no-cache \
     build-base \
@@ -25,10 +24,8 @@ RUN apk add --no-cache \
     libxml2-dev \
     libexif-dev \
     ffmpeg-dev \
-    libheif-dev \
     libde265-dev \
     x265-dev \
-    libheif \
     libde265 \
     x265-libs \
     aom-dev \
@@ -54,7 +51,19 @@ RUN apk add --no-cache \
     libarchive-dev
 
 # Build latest libvips from source with libheif support
+ENV LIBHEIF_VERSION=1.19.8
 ENV VIPS_VERSION=8.16.1
+
+RUN wget https://github.com/strukturag/libheif/releases/download/v${LIBHEIF_VERSION}/libheif-${LIBHEIF_VERSION}.tar.gz && \
+    tar xf libheif-${LIBHEIF_VERSION}.tar.gz && \
+    cd libheif-${LIBHEIF_VERSION} && \
+    mkdir build && \
+    cd build && \
+    cmake -DENABLE_PLUGIN_LOADING=NO --preset=release .. && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf libheif-${LIBHEIF_VERSION}
 
 RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz && \
     tar xf vips-${VIPS_VERSION}.tar.xz && \
@@ -82,7 +91,9 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/v
 # Link libraries (Alpine uses /etc/ld-musl-*.path files instead of ld.so.conf)
 RUN mkdir -p /etc/ld-musl-$(uname -m).path.d && \
     echo "/usr/lib" > /etc/ld-musl-$(uname -m).path.d/libvips.conf && \
-    echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libvips.conf
+    echo "/usr/lib" >> /etc/ld-musl-$(uname -m).path.d/libheif.conf && \
+    echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libvips.conf && \
+    echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libheif.conf
 
 # Working directory
 WORKDIR /app
