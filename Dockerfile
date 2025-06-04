@@ -28,6 +28,11 @@ RUN apk add --no-cache \
     libheif-dev \
     libde265-dev \
     x265-dev \
+    libheif \
+    libde265 \
+    x265-libs \
+    aom-dev \
+    aom-libs \
     cmake \
     ninja \
     g++ \
