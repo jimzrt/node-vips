@@ -18,9 +18,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push image
+      - name: Build and push Node.js image
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile
           push: true
           tags: jamestop/node-vips:latest
+
+      - name: Build and push Golang image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.golang
+          push: true
+          tags: jamestop/golang-vips:latest
