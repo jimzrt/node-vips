@@ -71,7 +71,7 @@ RUN wget https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION}/v
     cd vips-${VIPS_VERSION} && \
     meson setup build \
       --buildtype=release \
-      -Dgtk_doc=false \
+      -Dintrospection=false \
       -Dheif=enabled \
       -Dfftw=enabled \
       -Dorc=enabled \
