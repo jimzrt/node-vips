@@ -52,8 +52,8 @@ RUN apk add --no-cache \
     libarchive-dev
 
 # Build latest libvips from source with libheif support
-ENV LIBHEIF_VERSION=1.19.8
-ENV VIPS_VERSION=8.16.1
+ENV LIBHEIF_VERSION=1.20.1
+ENV VIPS_VERSION=8.17.1
 
 RUN wget https://github.com/strukturag/libheif/releases/download/v${LIBHEIF_VERSION}/libheif-${LIBHEIF_VERSION}.tar.gz && \
     tar xf libheif-${LIBHEIF_VERSION}.tar.gz && \
