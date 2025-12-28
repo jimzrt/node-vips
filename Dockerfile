@@ -1,6 +1,6 @@
 # Dockerfile for node-sharp-base
 
-FROM node:22-alpine
+FROM node:24-alpine
 # Install required build tools and libraries
 RUN apk add --no-cache \
     build-base \
@@ -52,7 +52,7 @@ RUN apk add --no-cache \
 
 # Build latest libvips from source with libheif support
 ENV LIBHEIF_VERSION=1.20.2
-ENV VIPS_VERSION=8.17.2
+ENV VIPS_VERSION=8.18.0
 
 RUN wget https://github.com/strukturag/libheif/releases/download/v${LIBHEIF_VERSION}/libheif-${LIBHEIF_VERSION}.tar.gz && \
     tar xf libheif-${LIBHEIF_VERSION}.tar.gz && \
