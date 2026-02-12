@@ -51,7 +51,7 @@ RUN apk add --no-cache \
     libarchive-dev
 
 # Build latest libvips from source with libheif support
-ENV LIBHEIF_VERSION=1.20.2
+ENV LIBHEIF_VERSION=1.21.2
 ENV VIPS_VERSION=8.18.0
 
 RUN wget https://github.com/strukturag/libheif/releases/download/v${LIBHEIF_VERSION}/libheif-${LIBHEIF_VERSION}.tar.gz && \
@@ -94,6 +94,9 @@ RUN mkdir -p /etc/ld-musl-$(uname -m).path.d && \
     echo "/usr/lib" >> /etc/ld-musl-$(uname -m).path.d/libheif.conf && \
     echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libvips.conf && \
     echo "/usr/local/lib" >> /etc/ld-musl-$(uname -m).path.d/libheif.conf
+
+# Install sharp and canvas as global npm dependencies
+RUN npm install -g sharp canvas
 
 # Working directory
 WORKDIR /app
