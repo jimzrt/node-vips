@@ -99,7 +99,7 @@ RUN mkdir -p /etc/ld-musl-$(uname -m).path.d && \
 # PKG_CONFIG_PATH lets sharp find the libvips we built in /usr/local
 # node-addon-api is required when sharp builds from source (no prebuilt for Alpine)
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-RUN npm install -g node-addon-api && npm install -g sharp canvas
+RUN npm install -g node-addon-api node-gyp && npm install -g sharp canvas
 
 # Working directory
 WORKDIR /app
